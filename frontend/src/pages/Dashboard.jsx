@@ -1,321 +1,252 @@
-/* ============== DASHBOARD ============== */
-.dashboard {
-  animation: fadeIn 0.3s ease-in;
-}
+import React, { useState, useEffect } from 'react'
+import '../styles/Dashboard.css'
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+function Dashboard() {
+  const [stats, setStats] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-.dashboard-header {
-  margin-bottom: 2rem;
-}
+  useEffect(() => {
+    fetchStats()
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchStats, 30000)
+    return () => clearInterval(interval)
+  }, [])
 
-.dashboard-header h2 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-dark);
-}
+  const fetchStats = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/emissions/dashboard_stats/`,
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        }
+      )
 
-.dashboard-header p {
-  color: var(--text-gray);
-}
-
-/* ============== METRICS GRID ============== */
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 3rem;
-}
-
-.metric-card {
-  background: var(--bg-white);
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  border-left: 4px solid var(--primary);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-}
-
-.metric-card.total {
-  border-left-color: #3b82f6;
-}
-
-.metric-card.pending {
-  border-left-color: var(--warning);
-}
-
-.metric-card.warning {
-  border-left-color: var(--danger);
-}
-
-.metric-card.approved {
-  border-left-color: var(--success);
-}
-
-.metric-card.rejected {
-  border-left-color: #6b7280;
-}
-
-.metric-icon {
-  font-size: 2rem;
-  line-height: 1;
-}
-
-.metric-content {
-  flex: 1;
-}
-
-.metric-label {
-  font-size: 0.875rem;
-  color: var(--text-gray);
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-}
-
-.metric-value {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-.metric-detail {
-  font-size: 0.8rem;
-  color: var(--text-gray);
-}
-
-/* ============== EMISSIONS SECTION ============== */
-.emissions-section {
-  background: var(--bg-white);
-  padding: 2rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  margin-bottom: 3rem;
-}
-
-.emissions-section h3 {
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-  color: var(--text-dark);
-}
-
-.emissions-overview {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2rem;
-}
-
-.total-emissions-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem;
-  border-radius: 0.75rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.total-value {
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-.total-label {
-  font-size: 1rem;
-  opacity: 0.9;
-  margin-bottom: 0.5rem;
-}
-
-.total-detail {
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-.scope-breakdown h4 {
-  margin-bottom: 1rem;
-  color: var(--text-dark);
-  font-size: 1rem;
-}
-
-.scope-item {
-  margin-bottom: 1.5rem;
-}
-
-.scope-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.scope-name {
-  color: var(--text-dark);
-}
-
-.scope-percent {
-  color: var(--text-gray);
-  font-weight: 700;
-}
-
-.scope-bar {
-  height: 8px;
-  background: var(--border-light);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 0.5rem;
-}
-
-.scope-fill {
-  height: 100%;
-  transition: width 0.5s ease;
-}
-
-.scope-fill.scope-1 {
-  background: #ef4444;
-}
-
-.scope-fill.scope-2 {
-  background: #f59e0b;
-}
-
-.scope-fill.scope-3 {
-  background: #3b82f6;
-}
-
-.scope-value {
-  font-size: 0.85rem;
-  color: var(--text-gray);
-  font-weight: 500;
-}
-
-/* ============== ACTION SECTION ============== */
-.action-section {
-  margin-bottom: 3rem;
-}
-
-.action-section h3 {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-  color: var(--text-dark);
-}
-
-.action-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-}
-
-.action-card {
-  background: var(--bg-white);
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border-light);
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.action-card:hover {
-  border-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
-  transform: translateY(-2px);
-}
-
-.action-card.warning {
-  border-color: var(--warning);
-}
-
-.action-card.warning:hover {
-  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.1);
-}
-
-.action-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.action-card h4 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-dark);
-}
-
-.action-card p {
-  color: var(--text-gray);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.action-card .btn-small {
-  display: inline-block;
-  width: auto;
-}
-
-/* ============== INFO SECTION ============== */
-.info-section {
-  background: var(--bg-white);
-  padding: 2rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.info-section h3 {
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-  color: var(--text-dark);
-}
-
-.info-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
-
-.info-item h4 {
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-  color: var(--text-dark);
-}
-
-.info-item p {
-  color: var(--text-gray);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-/* ============== RESPONSIVE ============== */
-@media (max-width: 768px) {
-  .dashboard-header h2 {
-    font-size: 1.5rem;
+      if (!response.ok) throw new Error('Failed to fetch stats')
+      const data = await response.json()
+      setStats(data)
+      setError(null)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  .metrics-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  if (loading) return <div className="loading">Loading dashboard...</div>
+  if (error) return <div className="error">Error: {error}</div>
+  if (!stats) return <div>No data available</div>
+
+  const emissionsByScopePercentages = {
+    SCOPE_1: (stats.emissions_by_scope.SCOPE_1 / stats.total_emissions * 100) || 0,
+    SCOPE_2: (stats.emissions_by_scope.SCOPE_2 / stats.total_emissions * 100) || 0,
+    SCOPE_3: (stats.emissions_by_scope.SCOPE_3 / stats.total_emissions * 100) || 0,
   }
 
-  .emissions-overview {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+  return (
+    <div className="dashboard">
+      <div className="dashboard-header">
+        <h2>Dashboard</h2>
+        <p>Emissions data ingestion overview</p>
+      </div>
 
-  .action-cards {
-    grid-template-columns: 1fr;
-  }
+      {/* Key Metrics */}
+      <div className="metrics-grid">
+        <div className="metric-card total">
+          <div className="metric-icon">📊</div>
+          <div className="metric-content">
+            <div className="metric-label">Total Records</div>
+            <div className="metric-value">{stats.total_records}</div>
+            <div className="metric-detail">
+              All imported records
+            </div>
+          </div>
+        </div>
 
-  .emissions-section,
-  .info-section {
-    padding: 1rem;
-  }
+        <div className="metric-card pending">
+          <div className="metric-icon">⏳</div>
+          <div className="metric-content">
+            <div className="metric-label">Pending Review</div>
+            <div className="metric-value">{stats.pending_review}</div>
+            <div className="metric-detail">
+              Awaiting approval
+            </div>
+          </div>
+        </div>
+
+        <div className="metric-card warning">
+          <div className="metric-icon">⚠️</div>
+          <div className="metric-content">
+            <div className="metric-label">Flagged Suspicious</div>
+            <div className="metric-value">{stats.flagged_suspicious}</div>
+            <div className="metric-detail">
+              Require attention
+            </div>
+          </div>
+        </div>
+
+        <div className="metric-card approved">
+          <div className="metric-icon">✓</div>
+          <div className="metric-content">
+            <div className="metric-label">Approved</div>
+            <div className="metric-value">{stats.approved}</div>
+            <div className="metric-detail">
+              Locked for audit
+            </div>
+          </div>
+        </div>
+
+        <div className="metric-card rejected">
+          <div className="metric-icon">✕</div>
+          <div className="metric-content">
+            <div className="metric-label">Rejected</div>
+            <div className="metric-value">{stats.rejected}</div>
+            <div className="metric-detail">
+              Sent back to source
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Emissions Summary */}
+      <div className="emissions-section">
+        <h3>Total Emissions</h3>
+        
+        <div className="emissions-overview">
+          <div className="total-emissions-card">
+            <div className="total-value">
+              {(stats.total_emissions / 1000).toFixed(1)} tonnes
+            </div>
+            <div className="total-label">CO₂e</div>
+            <div className="total-detail">
+              {stats.total_emissions.toLocaleString('en-IN', { maximumFractionDigits: 0 })} kg
+            </div>
+          </div>
+
+          <div className="scope-breakdown">
+            <h4>By Scope</h4>
+            
+            <div className="scope-item">
+              <div className="scope-label">
+                <span className="scope-name">Scope 1 (Direct)</span>
+                <span className="scope-percent">{emissionsByScopePercentages.SCOPE_1.toFixed(1)}%</span>
+              </div>
+              <div className="scope-bar">
+                <div 
+                  className="scope-fill scope-1"
+                  style={{ width: emissionsByScopePercentages.SCOPE_1 + '%' }}
+                ></div>
+              </div>
+              <div className="scope-value">
+                {(stats.emissions_by_scope.SCOPE_1 / 1000).toFixed(1)} tonnes
+              </div>
+            </div>
+
+            <div className="scope-item">
+              <div className="scope-label">
+                <span className="scope-name">Scope 2 (Electricity)</span>
+                <span className="scope-percent">{emissionsByScopePercentages.SCOPE_2.toFixed(1)}%</span>
+              </div>
+              <div className="scope-bar">
+                <div 
+                  className="scope-fill scope-2"
+                  style={{ width: emissionsByScopePercentages.SCOPE_2 + '%' }}
+                ></div>
+              </div>
+              <div className="scope-value">
+                {(stats.emissions_by_scope.SCOPE_2 / 1000).toFixed(1)} tonnes
+              </div>
+            </div>
+
+            <div className="scope-item">
+              <div className="scope-label">
+                <span className="scope-name">Scope 3 (Travel)</span>
+                <span className="scope-percent">{emissionsByScopePercentages.SCOPE_3.toFixed(1)}%</span>
+              </div>
+              <div className="scope-bar">
+                <div 
+                  className="scope-fill scope-3"
+                  style={{ width: emissionsByScopePercentages.SCOPE_3 + '%' }}
+                ></div>
+              </div>
+              <div className="scope-value">
+                {(stats.emissions_by_scope.SCOPE_3 / 1000).toFixed(1)} tonnes
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Action Prompts */}
+      <div className="action-section">
+        <h3>Next Steps</h3>
+        
+        <div className="action-cards">
+          {stats.pending_review > 0 && (
+            <div className="action-card">
+              <div className="action-icon">👁️</div>
+              <h4>Review Pending Records</h4>
+              <p>{stats.pending_review} records waiting for approval</p>
+              <a href="/review" className="btn-small">Go to Review</a>
+            </div>
+          )}
+
+          {stats.flagged_suspicious > 0 && (
+            <div className="action-card warning">
+              <div className="action-icon">🚨</div>
+              <h4>Address Flagged Records</h4>
+              <p>{stats.flagged_suspicious} records marked as suspicious</p>
+              <a href="/review?status=FLAGGED" className="btn-small">Review Flagged</a>
+            </div>
+          )}
+
+          {stats.total_records === 0 && (
+            <div className="action-card info">
+              <div className="action-icon">📤</div>
+              <h4>Upload Data</h4>
+              <p>Start by uploading emissions data from your sources</p>
+              <a href="/upload" className="btn-small">Upload Data</a>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Data Quality Info */}
+      <div className="info-section">
+        <h3>Data Quality</h3>
+        
+        <div className="info-content">
+          <div className="info-item">
+            <h4>Confidence Scores</h4>
+            <p>
+              Records are scored 0-100% based on data completeness and consistency.
+              High-confidence records can be approved quickly. Low-confidence records 
+              may require analyst review.
+            </p>
+          </div>
+
+          <div className="info-item">
+            <h4>Suspicious Flags</h4>
+            <p>
+              Records flagged for issues like missing data, unusual values, or 
+              inconsistent units. These are highlighted for analyst attention but 
+              can still be approved if deemed acceptable.
+            </p>
+          </div>
+
+          <div className="info-item">
+            <h4>Audit Trail</h4>
+            <p>
+              Every approved record is locked for audit with complete history of 
+              who approved it and when. Raw data is preserved for traceability.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
+
+export default Dashboard
