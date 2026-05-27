@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # Local apps
     'apps.emissions',
     'apps.ingestion',
+    'apps.audits',
 ]
 
 MIDDLEWARE = [
