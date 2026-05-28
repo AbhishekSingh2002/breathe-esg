@@ -21,13 +21,8 @@ services:
         value: ".onrender.com"
       - key: CORS_ALLOWED_ORIGINS
         value: "https://breathe-esg-frontend.vercel.app"
-    
-    disk:
-      name: postgres
-      mountPath: /var/lib/postgresql
-      sizeGB: 15
 
-  - type: pserv
-    name: postgres
-    ipAllowList: []
-    plan: free
+databases:
+  - name: postgres
+    databaseName: breathe_esg
+    user: breathe_esg_user
