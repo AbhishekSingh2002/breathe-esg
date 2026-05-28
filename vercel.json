@@ -8,7 +8,9 @@
     "backend": {
       "root": "backend",
       "routePrefix": "/_/backend",
-      "framework": "django"
+      "framework": "django",
+      "installCommand": "pip install -r requirements.txt",
+      "buildCommand": "python manage.py migrate && python manage.py seed_demo_user"
     }
   }
 }
