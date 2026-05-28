@@ -10,8 +10,5 @@
       "routePrefix": "/_/backend",
       "framework": "django"
     }
-  },
-  "env": {
-    "VITE_API_URL": "/_/backend"
   }
 }
