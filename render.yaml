@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: breathe-esg-backend
+    runtime: python
+    pythonVersion: 3.10
+    workingDir: backend
+    
+    buildCommand: pip install -r requirements.txt && python manage.py migrate
+    startCommand: gunicorn config.wsgi:application
+    
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: postgres
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://breathe-esg-frontend.vercel.app"
+    
+    disk:
+      name: postgres
+      mountPath: /var/lib/postgresql
+      sizeGB: 15
+
+  - type: pserv
+    name: postgres
+    ipAllowList: []
+    plan: free

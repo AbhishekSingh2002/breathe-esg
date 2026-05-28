@@ -1,0 +1,38 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "workingDirectory": "frontend",
+  
+  "env": {
+    "VITE_API_URL": "@vite_api_url"
+  },
+  
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ],
+  
+  "regions": ["sfo1"],
+  
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}
