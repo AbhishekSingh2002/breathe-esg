@@ -3,15 +3,15 @@
     "frontend": {
       "root": "frontend",
       "routePrefix": "/",
-      "framework": "vite",
-      "env": {
-        "VITE_API_URL": "/_/backend"
-      }
+      "framework": "vite"
     },
     "backend": {
       "root": "backend",
       "routePrefix": "/_/backend",
       "framework": "django"
     }
+  },
+  "env": {
+    "VITE_API_URL": "/_/backend"
   }
 }
