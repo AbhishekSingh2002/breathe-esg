@@ -3,7 +3,6 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "framework": "vite",
-  "workingDirectory": "frontend",
   
   "env": {
     "VITE_API_URL": "@vite_api_url"
