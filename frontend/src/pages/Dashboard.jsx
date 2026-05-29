@@ -15,8 +15,9 @@ function Dashboard() {
 
   const fetchStats = async () => {
     try {
+      const API_URL = import.meta.env.VITE_API_URL || '/_/backend'
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/emissions/dashboard_stats/`,
+        `${API_URL}/api/emissions/dashboard_stats/`,
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`

@@ -22,7 +22,8 @@ function Review() {
   const fetchRecords = async () => {
     setLoading(true)
     try {
-      let url = `${import.meta.env.VITE_API_URL}/api/emissions/?ordering=-activity_date`
+      const API_URL = import.meta.env.VITE_API_URL || '/_/backend'
+      let url = `${API_URL}/api/emissions/?ordering=-activity_date`
       
       if (filters.status) url += `&review_status=${filters.status}`
       if (filters.scope) url += `&scope=${filters.scope}`
@@ -71,8 +72,9 @@ function Review() {
 
     setActionLoading(true)
     try {
+      const API_URL = import.meta.env.VITE_API_URL || '/_/backend'
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/emissions/batch_approve/`,
+        `${API_URL}/api/emissions/batch_approve/`,
         {
           method: 'POST',
           headers: {

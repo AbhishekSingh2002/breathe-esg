@@ -46,9 +46,10 @@ function Upload() {
     setMessage('Uploading and processing...')
 
     try {
+      const API_URL = import.meta.env.VITE_API_URL || '/_/backend'
       // Step 1: Create data source
       const dsResponse = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/data-sources/`,
+        `${API_URL}/api/data-sources/`,
         {
           method: 'POST',
           headers: {
@@ -74,7 +75,7 @@ function Upload() {
       formData.append('file', file)
 
       const processResponse = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/data-sources/${dataSource.id}/process/`,
+        `${API_URL}/api/data-sources/${dataSource.id}/process/`,
         {
           method: 'POST',
           headers: {
