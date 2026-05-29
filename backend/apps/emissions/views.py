@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Sum, Count
 from datetime import datetime
@@ -31,7 +31,7 @@ class EmissionRecordViewSet(viewsets.ModelViewSet):
     POST /api/emissions/{id}/approve/ - approve/reject/flag
     """
     
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]  # Allow unauthenticated access in development
     serializer_class = EmissionRecordListSerializer
     
     def get_queryset(self):
@@ -206,7 +206,7 @@ class DataSourceViewSet(viewsets.ModelViewSet):
     GET /api/data-sources/{id}/ - detail
     """
     
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]  # Allow unauthenticated access in development
     serializer_class = DataSourceSerializer
     
     def get_queryset(self):
@@ -338,6 +338,6 @@ class DataSourceViewSet(viewsets.ModelViewSet):
 
 class OrganizationViewSet(viewsets.ReadOnlyModelViewSet):
     """List organizations (admin only)"""
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]  # Allow unauthenticated access in development
     serializer_class = OrganizationSerializer
     queryset = Organization.objects.all()

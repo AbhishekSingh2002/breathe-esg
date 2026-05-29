@@ -294,11 +294,6 @@ function Review() {
                       {record.review_status}
                     </span>
                   </td>
-                  <td>
-                    <a href={`/record/${record.id}`} className="btn-small-link">
-                      View
-                    </a>
-                  </td>
                 </tr>
               ))
             )}
