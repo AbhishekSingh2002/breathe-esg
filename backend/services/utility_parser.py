@@ -143,14 +143,14 @@ class UtilityParser:
             location = None
         
         return {
-            'activity_date': activity_date,
+            'activity_date': activity_date.isoformat() if activity_date else None,
             'category': 'ELECTRICITY',
             'scope': 'SCOPE_2',
             'quantity': consumption,
             'unit': unit,
             'meter_id': meter_id,
-            'billing_start': billing_start,
-            'billing_end': billing_end,
+            'billing_start': billing_start.isoformat() if billing_start else None,
+            'billing_end': billing_end.isoformat() if billing_end else None,
             'tariff_type': tariff_type,
             'location': location,
             'source_type': 'UTILITY',

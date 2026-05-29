@@ -199,7 +199,7 @@ class TravelParser:
             distance = self._get_distance(origin, destination, row.get('distance'))
         
         return {
-            'activity_date': activity_date,
+            'activity_date': activity_date.isoformat() if activity_date else None,
             'category': category,
             'scope': 'SCOPE_3',
             'employee_id': employee_id,

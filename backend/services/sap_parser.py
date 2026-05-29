@@ -149,7 +149,7 @@ class SAPParser:
         category, scope = self._map_material(material)
         
         return {
-            'activity_date': activity_date,
+            'activity_date': activity_date.isoformat() if activity_date else None,
             'category': category,
             'scope': scope,
             'quantity': quantity,
