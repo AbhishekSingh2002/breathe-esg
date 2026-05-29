@@ -1,0 +1,9 @@
+meter_id,billing_start,billing_end,consumption,unit,tariff_type,location
+MTR001,2025-02-10,2025-03-09,1200,kWh,standard,Bangalore HQ
+MTR002,2025-02-15,2025-03-15,2500,kWh,peak,Mumbai Office
+,2025-02-12,2025-03-12,800,kWh,standard,Delhi Branch
+MTR004,2025-02-10,2025-03-09,-150,kWh,standard,Bangalore HQ
+MTR005,2025-02-15,2025-03-15,8500,kWh,offpeak,Bangalore Warehouse
+MTR006,2025-01-15,2025-03-20,4200,kWh,standard,Pune Facility
+MTR007,2025-02-10,2025-03-09,0.5,MWh,standard,Chennai Data Center
+MTR008,2025-02-10,2025-03-09,1100000,Wh,standard,Bangalore HQ

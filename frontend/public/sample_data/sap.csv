@@ -1,0 +1,11 @@
+Belegdatum,Materialgruppe,Menge,Einheit,Werk,Kostenstelle,Lieferant
+12.03.2025,Diesel,500,L,BLR01,OPS100,Shell India
+15.03.2025,Petrol,120,GAL,MUM02,OPS220,Indian Oil
+18.03.2025,Diesel,750,L,BLR01,OPS100,Bharat Petroleum
+22.03.2025,CNG,300,L,DEL01,OPS150,GAIL
+25.03.2025,Diesel,-100,L,BLR01,OPS100,Shell India
+28.03.2025,Diesel,1200,L,HYD01,,Indane
+02.04.2025,LPG,250,L,PNQ01,OPS200,HP Gas
+05.04.2025,Petrol,85,GAL,BLR01,OPS100,Caltex
+08.04.2025,Diesel,600,L,,OPS100,Shell India
+10.04.2025,Diesel,450,L,BLR01,OPS100,
